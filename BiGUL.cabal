@@ -1,0 +1,88 @@
+name:                BiGUL
+version:             1.1.1.0
+synopsis:            The Bidirectional Generic Update Language
+description:
+  Putback-based bidirectional programming allows the programmer to
+  write only one putback transformation, from which the unique
+  corresponding forward transformation is derived for free. BiGUL,
+  short for the Bidirectional Generic Update Language, is designed to
+  be a minimalist putback-based bidirectional programming language.
+  BiGUL was originally developed in the dependently typed programming
+  language Agda, and its well-behavedness has been completely formally
+  verified; this package is the Haskell port of BiGUL.
+  .
+  For more detail, see the following paper:
+  .
+  * Hsiang-Shang Ko, Tao Zan, and Zhenjiang Hu. BiGUL: A formally
+    verified core language for putback-based bidirectional programming.
+    In /Partial Evaluation and Program Manipulation/, PEPM’16,
+    pages 61–72. ACM, 2016. <http://dx.doi.org/10.1145/2847538.2847544>.
+
+homepage:            http://www.prg.nii.ac.jp/project/bigul/
+bug-reports:         https://bitbucket.org/prl_tokyo/bigul/issues
+license:             PublicDomain
+license-file:        UNLICENSE
+author:              Josh Ko, Tao Zan, Li Liu, Zirun Zhu, Jorge Mendes, and Zhenjiang Hu
+maintainer:          Josh Ko <hsiang-shang@nii.ac.jp> and Zirun Zhu <zhu@nii.ac.jp>
+category:            Language, Generics, Lenses
+build-type:          Simple
+cabal-version:       >= 2.0
+extra-source-files:  CHANGELOG.md
+
+source-repository head
+  type:      git
+  location:  https://bitbucket.org/prl_tokyo/bigul.git
+
+source-repository this
+  type:      git
+  location:  https://bitbucket.org/prl_tokyo/bigul.git
+  tag:       v1.0.2
+
+library
+  exposed-modules:     Generics.BiGUL
+                       Generics.BiGUL.Error
+                       Generics.BiGUL.Interpreter
+                       Generics.BiGUL.Interpreter.Unsafe
+                       Generics.BiGUL.TH
+                       Generics.BiGUL.Lib
+                       Generics.BiGUL.Lib.HuStudies
+                       Generics.BiGUL.Lib.List
+  other-modules:       Generics.BiGUL.PatternMatching
+                       GHC.InOut
+  default-extensions:  CPP,
+                       DeriveDataTypeable,
+                       EmptyCase,
+                       ExistentialQuantification,
+                       FlexibleContexts,
+                       FlexibleInstances,
+                       GADTs,
+                       ScopedTypeVariables,
+                       TemplateHaskell,
+                       TupleSections,
+                       TypeFamilies,
+                       TypeOperators,
+                       UndecidableInstances
+
+  if impl(ghc >= 8.6.3)
+    build-depends:     base >= 4.11 && < 5,
+                       mtl >= 2.2.2,
+                       containers >= 0.6.1.1,
+                       template-haskell > 2.13.0.0,
+                       th-extras >= 0.0.0.4
+
+  if impl(ghc >= 8) && impl(ghc < 8.6.3)
+    build-depends:     base >= 4.9 && < 4.12,
+                       mtl >= 2.2,
+                       containers >= 0.5.1,
+                       template-haskell >= 2.11 && <= 2.13.0.0,
+                       th-extras >= 0.0.0.4
+
+  if impl(ghc >= 7.10) && impl(ghc < 8)
+    build-depends:     base == 4.8.*,
+                       mtl >= 2.2,
+                       containers >= 0.5,
+                       template-haskell >= 2.10 && < 2.11,
+                       th-extras >= 0.0.0.4
+
+  hs-source-dirs:      src
+  default-language:    Haskell2010
